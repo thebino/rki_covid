@@ -41,47 +41,48 @@ SCAN_INTERVAL = timedelta(minutes=10)
 CONF_DISTRICTS = "districts"
 
 # schema for each config entry
-DISTRICT_SCHEMA = vol.Schema(
-    {vol.Required(CONF_NAME): cv.string}
-)
+DISTRICT_SCHEMA = vol.Schema({vol.Required(CONF_NAME): cv.string})
 
 # schema for each platform sensor
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
-    {
-        vol.Required(CONF_DISTRICTS): vol.All(cv.ensure_list, [DISTRICT_SCHEMA])
-    }
+    {vol.Required(CONF_DISTRICTS): vol.All(cv.ensure_list, [DISTRICT_SCHEMA])}
 )
 
 
 async def async_setup_platform(
-        hass: HomeAssistantType,
-        config: ConfigType,
-        async_add_entities: Callable,
-        discovery_info: Optional[DiscoveryInfoType] = None,
+    hass: HomeAssistantType,
+    config: ConfigType,
+    async_add_entities: Callable,
+    discovery_info: Optional[DiscoveryInfoType] = None,
 ) -> None:
     """Set up the sensor platform."""
     session = async_get_clientsession(hass)
     api = RKICovidAPI(session)
-    sensors = [RKICovidNumbersSensor(api, district) for district in config[CONF_DISTRICTS]]
+    sensors = [
+        RKICovidNumbersSensor(api, district) for district in config[CONF_DISTRICTS]
+    ]
     async_add_entities(sensors, update_before_add=True)
 
 
 async def async_setup_entry(
-        hass: core.HomeAssistant,
-        config_entry: config_entries.ConfigEntry,
-        async_add_entities,
+    hass: core.HomeAssistant,
+    config_entry: config_entries.ConfigEntry,
+    async_add_entities,
 ):
     """Setup sensors from a config entry created in the integrations UI."""
     config = hass.data[DOMAIN][config_entry.entry_id]
     session = async_get_clientsession(hass)
     api = RKICovidAPI(session)
-    sensors = [RKICovidNumbersSensor(api, district) for district in config[CONF_DISTRICTS]]
+    sensors = [
+        RKICovidNumbersSensor(api, district) for district in config[CONF_DISTRICTS]
+    ]
     async_add_entities(sensors, update_before_add=True)
 
 
 @dataclass
 class DistrictData:
     """District representation class."""
+
     name: str
     county: str
     count: int
@@ -97,21 +98,23 @@ class RKICovidAPI:
         self.session = session
 
     async def get_district(self, district: str) -> DistrictData:
-        response = await self.session.get(url=f"{BASE_API_URL}/api/districts", allow_redirects=True)
+        response = await self.session.get(
+            url=f"{BASE_API_URL}/api/districts", allow_redirects=True
+        )
         if response.status == 200:
             data = await response.json()
             _LOGGER.error(f"### RESPONSE CODE = {response.status}")
 
-            last_update = data['lastUpdate']
-            for district in data['districts']:
-                if district['name'] == district:
-                    name = district['name'],
-                    county = district['county'],
-                    count = district['count'],
-                    deaths = district['deaths'],
-                    week_incidence = district['weekIncidence'],
-                    cases_per_100k = district['casesPer100k'],
-                    cases_per_population = district['casesPerPopulation'],
+            last_update = data["lastUpdate"]
+            for district in data["districts"]:
+                if district["name"] == district:
+                    name = (district["name"],)
+                    county = (district["county"],)
+                    count = (district["count"],)
+                    deaths = (district["deaths"],)
+                    week_incidence = (district["weekIncidence"],)
+                    cases_per_100k = (district["casesPer100k"],)
+                    cases_per_population = (district["casesPerPopulation"],)
 
                     return DistrictData(
                         name=name,
@@ -186,7 +189,9 @@ class RKICovidNumbersSensor(Entity):
             self._available = True
 
             elapsed = time.perf_counter() - s
-            _LOGGER.info(f"request district from {BASE_API_URL} took {elapsed:0.2f} seconds.")
+            _LOGGER.info(
+                f"request district from {BASE_API_URL} took {elapsed:0.2f} seconds."
+            )
         except ClientError:
             self._available = False
             _LOGGER.exception(f"Error retrieving data from {BASE_API_URL}.")
