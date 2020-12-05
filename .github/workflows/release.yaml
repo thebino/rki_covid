@@ -9,19 +9,16 @@ jobs:
     name: Prepare release
     runs-on: ubuntu-latest
     steps:
-      - name: list dir
-        run: |
-          ls -alh
       - name: list workspace
         run: |
-          ls -alh /home/runner/work/
+          ls -alh /home/runner/work/rki_covid/
       - name: pwd
         run: |
           pwd
       # Pack the HACS dir as a zip and upload to the release
       - name: ZIP rki_covid Dir
         run: |
-          cd /home/runner/work/custom_components/rki_covid
+          cd /home/runner/work/rki_covid/custom_components/rki_covid
           zip rki_covid.zip -r ./
 
       - name: Upload zip to release
@@ -29,7 +26,7 @@ jobs:
 
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: /home/runner/work/custom_components/rki_covid/rki_covid.zip
+          file: /home/runner/work/rki_covid/custom_components/rki_covid/rki_covid.zip
           asset_name: rki_covid.zip
           tag: ${{ github.ref }}
           overwrite: true
