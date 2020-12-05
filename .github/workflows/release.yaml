@@ -13,7 +13,10 @@ jobs:
         uses: actions/checkout@v2
       - name: list workspace
         run: |
-          tree .
+          ls -alh /home/runner/work/rki_covid/
+      - name: list repo
+        run: |
+          ls -alh /home/runner/work/rki_covid/rki_covid/
       - name: pwd
         run: |
           pwd
