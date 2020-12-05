@@ -97,7 +97,7 @@ class RKICovidAPI:
     """REST API for RKI Covid numbers."""
 
     def __init__(self, session: ClientSession):
-        """initialize the REST API."""
+        """Initialize the REST API."""
         self.session = session
 
     async def get_district(self, district: str) -> DistrictData:

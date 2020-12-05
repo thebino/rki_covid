@@ -1,0 +1,1 @@
+"""RKI Covid numbers integration."""
