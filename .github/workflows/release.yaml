@@ -1,0 +1,25 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release:
+    name: Prepare release
+    runs-on: ubuntu-latest
+    steps:
+      # Pack the HACS dir as a zip and upload to the release
+      - name: ZIP rki_covid Dir
+        run: |
+          cd /home/runner/work/custom_components/rki_covid
+          zip rki_covid.zip -r ./
+      - name: Upload zip to release
+        uses: svenstaro/upload-release-action@v1-release
+
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: /home/runner/work/custom_components/rki_covid/rki_covid.zip
+          asset_name: rki_covid.zip
+          tag: ${{ github.ref }}
+          overwrite: true
