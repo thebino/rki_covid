@@ -101,7 +101,7 @@ class RKICovidAPI:
         self.session = session
 
     async def get_district(self, district: str) -> DistrictData:
-        """return a specific district."""
+        """Return a specific district."""
         response = await self.session.get(
             url=f"{BASE_API_URL}/api/districts", allow_redirects=True
         )
@@ -142,7 +142,7 @@ class RKICovidNumbersSensor(Entity):
     """Representation of a sensor."""
 
     def __init__(self, api: RKICovidAPI, district: Dict[str, str]):
-        """init sensor."""
+        """Initialize a new sensor."""
         super().__init__()
         self.api = api
         self.district = district["name"]
@@ -168,16 +168,16 @@ class RKICovidNumbersSensor(Entity):
 
     @property
     def state(self) -> Optional[str]:
-        """return current state."""
+        """Return current state."""
         return self._state
 
     @property
     def device_state_attributes(self) -> Dict[str, Any]:
-        """return attributes."""
+        """Return attributes."""
         return self.attrs
 
     async def async_update(self):
-        """fetching new data from API, map into self.attrs."""
+        """Fetch new data from API and map it to self.attrs."""
         try:
             _LOGGER.info("Start async_update...")
             s = time.perf_counter()
