@@ -11,19 +11,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: list workspace
-        run: |
-          ls -alh /home/runner/work/rki_covid/
-      - name: list repo
-        run: |
-          ls -alh /home/runner/work/rki_covid/rki_covid/
-      - name: pwd
-        run: |
-          pwd
+
       # Pack the HACS dir as a zip and upload to the release
       - name: ZIP rki_covid Dir
         run: |
-          cd /home/runner/work/rki_covid/custom_components/rki_covid
+          cd /home/runner/work/rki_covid/rki_covid/custom_components/rki_covid
           zip rki_covid.zip -r ./
 
       - name: Upload zip to release
