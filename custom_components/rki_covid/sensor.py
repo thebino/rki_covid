@@ -1,4 +1,4 @@
-"""RKI Covid numbers sensor"""
+"""RKI Covid numbers sensor."""
 
 from dataclasses import dataclass
 from datetime import timedelta
@@ -69,7 +69,7 @@ async def async_setup_entry(
     config_entry: config_entries.ConfigEntry,
     async_add_entities,
 ):
-    """Setup sensors from a config entry created in the integrations UI."""
+    """Create sensors from a config entry in the integrations UI."""
     config = hass.data[DOMAIN][config_entry.entry_id]
     session = async_get_clientsession(hass)
     api = RKICovidAPI(session)
@@ -94,10 +94,14 @@ class DistrictData:
 
 
 class RKICovidAPI:
+    """REST API for RKI Covid numbers."""
+
     def __init__(self, session: ClientSession):
+        """initialize the REST API."""
         self.session = session
 
     async def get_district(self, district: str) -> DistrictData:
+        """return a specific district."""
         response = await self.session.get(
             url=f"{BASE_API_URL}/api/districts", allow_redirects=True
         )
@@ -138,6 +142,7 @@ class RKICovidNumbersSensor(Entity):
     """Representation of a sensor."""
 
     def __init__(self, api: RKICovidAPI, district: Dict[str, str]):
+        """init sensor."""
         super().__init__()
         self.api = api
         self.district = district["name"]
@@ -163,16 +168,16 @@ class RKICovidNumbersSensor(Entity):
 
     @property
     def state(self) -> Optional[str]:
+        """return current state."""
         return self._state
 
     @property
     def device_state_attributes(self) -> Dict[str, Any]:
+        """return attributes."""
         return self.attrs
 
     async def async_update(self):
-        """
-        fetching new data from API, map into self.attrs
-        """
+        """fetching new data from API, map into self.attrs."""
         try:
             _LOGGER.info("Start async_update...")
             s = time.perf_counter()
