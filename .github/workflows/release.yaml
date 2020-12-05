@@ -23,7 +23,7 @@ jobs:
 
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: /home/runner/work/rki_covid/custom_components/rki_covid/rki_covid.zip
+          file: /home/runner/work/rki_covid/rki_covid/custom_components/rki_covid/rki_covid.zip
           asset_name: rki_covid.zip
           tag: ${{ github.ref }}
           overwrite: true
