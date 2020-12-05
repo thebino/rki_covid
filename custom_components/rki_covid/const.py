@@ -1,7 +1,7 @@
 """Constants for the RKI Covid numbers integration."""
 DOMAIN = "rki_covid"
 
-ATTRIBUTION = f"Data provided by Robert Koch-Institut"
+ATTRIBUTION = "Data provided by Robert Koch-Institut"
 
 BASE_API_URL = "https://rki-covid-api.now.sh"
 ENDPOINT_DISCTRICTS = "/api/districts"
