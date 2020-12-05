@@ -1,0 +1,6 @@
+# https://bandit.readthedocs.io/en/latest/config.html
+
+tests: [ 'B108','B306','B307','B313','B314','B315','B316','B317','B318','B319','B320','B325','B602','B604', ]
+
+assert_used:
+  skips: ['*_test.py', 'test_*.py']
