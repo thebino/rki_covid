@@ -2,7 +2,7 @@
 
 [![GitHub contributors](https://img.shields.io/github/contributors/thebino/rki_covid)](https://github.com/thebino/rki_covid/graphs/contributors)
 ![Version](https://img.shields.io/github/v/release/thebino/rki_covid)
-[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
+[![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/custom-components/hacs)
 
 The `rki_covid` component is a Home Assistant custom sensor for monitoring regional covid numbers in Germany.
 
@@ -23,23 +23,10 @@ The `rki_covid` component is a Home Assistant custom sensor for monitoring regio
 
 
 ## Configure
-Add the following configuration block into your `<config dir>/configuration.yaml`:
+Add a new integration via `Configuration > Integration` and select your district to monitor.
+You can add multiple integrations for different districts.
 
-```yaml
-# Example configuration.yaml entry
-rki_covid:
-  sensors:
-  - name: "München"
-    district: "München"
-  - name: "Berlin"
-    district: "Berlin Mitte"
-```
-
-#### SENSOR PARAMETERS
-|Attribute |Required|Description
-|:-----------|:---:|------------
-| `name` | Yes | Sensor friendly name
-| `district` | Yes | Select your district to monitor from the configuration.
+Each district will add `5 Entities` wich can be added to the Lovelace UI.
 
 
 ## Entities

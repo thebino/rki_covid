@@ -1,9 +1,11 @@
 {
   "domain": "rki_covid",
   "name": "Robert-Koch Institut COVID Numbers",
-  "documentation": "https://github.com/thebino/rki_covid/README.md",
+  "documentation": "https://github.com/thebino/rki_covid/blob/master/README.md",
   "issue_tracker": "https://github.com/thebino/rki_covid/issues",
+  "dependencies": [],
   "codeowners": ["@thebino"],
-  "config_flow": false,
-  "requirements": ["aiohttp==3.7.1"]
+  "requirements": ["aiohttp==3.7.1"],
+  "quality_scale": "gold",
+  "config_flow": true
 }

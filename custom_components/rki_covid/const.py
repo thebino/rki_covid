@@ -4,11 +4,13 @@ DOMAIN = "rki_covid"
 ATTRIBUTION = "Data provided by Robert Koch-Institut"
 
 BASE_API_URL = "https://rki-covid-api.now.sh"
-ENDPOINT_DISCTRICTS = "/api/districts"
+ENDPOINT_DISTRICTS = "/api/districts"
 
+# configuration keywords
 CONF_DISTRICTS = "districts"
-ATTR_DISTRICT = "district"
+CONF_COUNTY = "county"
 
+# configuration attributes
 ATTR_COUNTY = "county"
 ATTR_COUNT = "count"
 ATTR_DEATHS = "deaths"

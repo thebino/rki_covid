@@ -1,0 +1,15 @@
+{
+  "title": "RKI Covid numbers",
+  "config": {
+    "step": {
+      "user": {
+        "data": {
+          "county": "Bezirk",
+          "name": "Name des Sensors."
+        },
+        "title": "Land-/Stadtkreis",
+        "description": "Wähle einen Land-/Stadtkreis um diesen zu überwachen."
+      }
+    }
+  }
+}

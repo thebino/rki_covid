@@ -2,7 +2,7 @@
   "name": "RKI Covid numbers",
   "zip_release": true,
   "filename": "rki_covid.zip",
-  "render_readme": true,
+  "country": "DE",
   "domains": ["rki_covid", "sensor"],
   "homeassistant": "0.110.0",
   "iot_class": "Cloud Polling"
