@@ -42,4 +42,4 @@ This integration creates entities in the format `DOMAIN.NAME_entity`.
 
 
 ## Contribution
-See [Contribution](Contribution.mb) for details.
+See [Contribution](CONTRIBUTING.md) for details.
