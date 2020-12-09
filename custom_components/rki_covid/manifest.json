@@ -5,7 +5,7 @@
   "issue_tracker": "https://github.com/thebino/rki_covid/issues",
   "dependencies": [],
   "codeowners": ["@thebino"],
-  "requirements": ["aiohttp==3.7.1"],
+  "requirements": [],
   "quality_scale": "gold",
   "config_flow": true
 }
