@@ -3,7 +3,7 @@ DOMAIN = "rki_covid"
 
 ATTRIBUTION = "Data provided by Robert Koch-Institut"
 
-BASE_API_URL = "https://rki-covid-api.now.sh"
+BASE_API_URL = "https://rki.marlon-lueckert.de"
 ENDPOINT_DISTRICTS = "/api/districts"
 
 # configuration keywords
