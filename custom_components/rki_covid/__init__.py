@@ -62,11 +62,15 @@ async def get_coordinator(hass: core.HomeAssistant, api: RKICovidAPI):
         return hass.data[DOMAIN]
 
     async def async_get_districts():
+        """Fetch data from API endpoint.
+
+        Here the data for each district is loaded.
+        """
         try:
             with async_timeout.timeout(10):
                 return {case.county: case for case in await api.load_districts()}
-        except (asyncio.TimeoutError, aiohttp.ClientError):
-            raise update_coordinator.UpdateFailed
+        except (asyncio.TimeoutError, aiohttp.ClientError) as err:
+            raise update_coordinator.UpdateFailed(f"Error communicating with API: {err}")
 
     hass.data[DOMAIN] = update_coordinator.DataUpdateCoordinator(
         hass,
