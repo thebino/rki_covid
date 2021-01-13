@@ -41,5 +41,23 @@ This integration creates entities in the format `DOMAIN.NAME_entity`.
 |`sensor.NAME_casesPerPopulation`| number | indicates cases per population.
 
 
+## Graph
+Home-Assistant has built-in cards for graphs wich could be really helpful to display the current count with history.
+
+```yaml
+type: sensor
+graph: line
+detail: 1
+name: 'München '
+entity: sensor.sk_munchen_weekincidence
+hours_to_show: 72
+```
+
+![lovelace_graph.png](docs/lovelace_graph.png)
+
+#### Automations
+For automations have a look on the [trend](https://www.home-assistant.io/integrations/trend/) platform.
+
+
 ## Contribution
 See [Contribution](CONTRIBUTING.md) for details.
