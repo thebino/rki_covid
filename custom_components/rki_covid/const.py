@@ -19,4 +19,3 @@ ATTR_DEATHS = "deaths"
 ATTR_WEEK_INCIDENCE = "weekIncidence"
 ATTR_CASES_PER_100 = "casesPer100k"
 ATTR_CASES_PER_POPULATION = "casesPerPopulation"
-
