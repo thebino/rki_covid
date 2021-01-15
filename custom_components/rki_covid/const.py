@@ -3,7 +3,9 @@ DOMAIN = "rki_covid"
 
 ATTRIBUTION = "Data provided by Robert Koch-Institut"
 
-BASE_API_URL = "https://rki.marlon-lueckert.de"
+# https://api.corona-zahlen.org/docs/endpoints/districts.html
+
+BASE_API_URL = "https://api.corona-zahlen.org/"
 ENDPOINT_DISTRICTS = "/api/districts"
 
 # configuration keywords
@@ -17,3 +19,4 @@ ATTR_DEATHS = "deaths"
 ATTR_WEEK_INCIDENCE = "weekIncidence"
 ATTR_CASES_PER_100 = "casesPer100k"
 ATTR_CASES_PER_POPULATION = "casesPerPopulation"
+
