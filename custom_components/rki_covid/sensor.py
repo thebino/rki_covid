@@ -2,7 +2,7 @@
 
 from datetime import timedelta
 import logging
-from typing import Dict, Optional, Callable
+from typing import Callable, Dict, Optional
 
 from homeassistant import config_entries, core
 from homeassistant.components.sensor import PLATFORM_SCHEMA
@@ -10,12 +10,12 @@ from homeassistant.const import ATTR_ATTRIBUTION, CONF_NAME
 from homeassistant.helpers import update_coordinator
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 import homeassistant.helpers.config_validation as cv
-from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from homeassistant.helpers.typing import (
     ConfigType,
     DiscoveryInfoType,
     HomeAssistantType,
 )
+from homeassistant.helpers.update_coordinator import CoordinatorEntity
 import voluptuous as vol
 
 from . import get_coordinator
@@ -48,10 +48,10 @@ SENSORS = {
 
 
 async def async_setup_platform(
-    hass: HomeAssistantType,
-    config: ConfigType,
-    async_add_entities: Callable,
-    discovery_info: Optional[DiscoveryInfoType] = None,
+        hass: HomeAssistantType,
+        config: ConfigType,
+        async_add_entities: Callable,
+        discovery_info: Optional[DiscoveryInfoType] = None,
 ) -> None:
     """Set up the sensor platform."""
     session = async_get_clientsession(hass)
@@ -70,9 +70,9 @@ async def async_setup_platform(
 
 
 async def async_setup_entry(
-    hass: core.HomeAssistant,
-    config_entry: config_entries.ConfigEntry,
-    async_add_entities,
+        hass: core.HomeAssistant,
+        config_entry: config_entries.ConfigEntry,
+        async_add_entities,
 ):
     """Create sensors from a config entry in the integrations UI."""
     session = async_get_clientsession(hass)
@@ -93,10 +93,10 @@ class RKICovidNumbersSensor(CoordinatorEntity):
     unique_id = None
 
     def __init__(
-        self,
-        coordinator: update_coordinator.DataUpdateCoordinator,
-        district: Dict[str, str],
-        info_type: str,
+            self,
+            coordinator: update_coordinator.DataUpdateCoordinator,
+            district: Dict[str, str],
+            info_type: str,
     ):
         """Initialize a new sensor."""
         super().__init__(coordinator)
@@ -113,8 +113,8 @@ class RKICovidNumbersSensor(CoordinatorEntity):
     def available(self) -> bool:
         """Return True if entity is available."""
         return (
-            self.coordinator.last_update_success
-            and self.district in self.coordinator.data
+                self.coordinator.last_update_success
+                and self.district in self.coordinator.data
         )
 
     @property
@@ -131,9 +131,9 @@ class RKICovidNumbersSensor(CoordinatorEntity):
     def unit_of_measurement(self):
         """Return unit of measurement."""
         if (
-            self.info_type == "count"
-            or self.info_type == "deaths"
-            or self.info_type == "recovered"
+                self.info_type == "count"
+                or self.info_type == "deaths"
+                or self.info_type == "recovered"
         ):
             return "people"
         elif self.info_type == "weekIncidence":

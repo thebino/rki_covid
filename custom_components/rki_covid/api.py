@@ -1,8 +1,8 @@
 """REST API for RKI Covid numbers."""
 
+from datetime import datetime
 import logging
 from typing import Iterable
-from datetime import datetime
 
 from aiohttp import ClientError, ClientSession
 
