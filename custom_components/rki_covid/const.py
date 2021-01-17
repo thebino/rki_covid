@@ -3,8 +3,8 @@ DOMAIN = "rki_covid"
 
 ATTRIBUTION = "Data provided by Robert Koch-Institut"
 
-BASE_API_URL = "https://rki.marlon-lueckert.de"
-ENDPOINT_DISTRICTS = "/api/districts"
+BASE_API_URL = "https://api.corona-zahlen.org"
+ENDPOINT_DISTRICTS = "/districts"
 
 # configuration keywords
 CONF_DISTRICTS = "districts"

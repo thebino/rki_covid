@@ -7,6 +7,16 @@
 The `rki_covid` component is a Home Assistant custom sensor for monitoring regional covid numbers in Germany.
 
 
+## Table of contents
+* [Installation](#installation)
+  * [Install with HACS](#install-with-hacs)
+  * [Install manually](#install-manually)
+* [Configuration](#configuration)
+* [Entities](#entities)
+* [Graph](#graph)
+* [Automations](#automations)
+* [Contribution](#contribution)
+
 ## Installation
 ### Install with HACS (recommended)
 1. Ensure that [HACS](https://community.home-assistant.io/t/custom-component-hacs) is installed.
@@ -22,7 +32,7 @@ The `rki_covid` component is a Home Assistant custom sensor for monitoring regio
 4. Restart Home Assistant.
 
 
-## Configure
+## Configuration
 Add a new integration via `Configuration > Integration` and select your district to monitor.
 You can add multiple integrations for different districts.
 
@@ -35,10 +45,13 @@ This integration creates entities in the format `DOMAIN.NAME_entity`.
 |Sensor  |Type|Description
 |:-----------|:---|:------------
 |`sensor.NAME_count`| number | indicates the confirmed cases.
+|`sensor.NAME_newCases`| number | indicates the new confirmed cases.
 |`sensor.NAME_deaths`| number | indicates the numbers of confirmed death cases.
-|`sensor.NAME_weekIncidence`| number | indicates the week incidence per 100.000 inhabitants.
+|`sensor.NAME_newDeaths`| number | indicates the numbers of new confirmed death cases.
+|`sensor.NAME_recovered`| number | indicates the numbers of confirmed death cases.
+|`sensor.NAME_newRecovered`| number | indicates the numbers of new confirmed death cases.
 |`sensor.NAME_casesPer100k`| number | indicates cases per 100k.
-|`sensor.NAME_casesPerPopulation`| number | indicates cases per population.
+|`sensor.NAME_weekIncidence`| number | indicates the week incidence per 100.000 inhabitants.
 
 
 ## Graph

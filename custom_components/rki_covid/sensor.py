@@ -2,7 +2,7 @@
 
 from datetime import timedelta
 import logging
-from typing import Dict, Optional
+from typing import Callable, Dict, Optional
 
 from homeassistant import config_entries, core
 from homeassistant.components.sensor import PLATFORM_SCHEMA
@@ -10,6 +10,11 @@ from homeassistant.const import ATTR_ATTRIBUTION, CONF_NAME
 from homeassistant.helpers import update_coordinator
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 import homeassistant.helpers.config_validation as cv
+from homeassistant.helpers.typing import (
+    ConfigType,
+    DiscoveryInfoType,
+    HomeAssistantType,
+)
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 import voluptuous as vol
 
@@ -33,10 +38,35 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 SENSORS = {
     "count": "mdi:virus",
     "deaths": "mdi:christianity",
+    "recovered": "mdi:bottle-tonic-plus-outline",
     "weekIncidence": "mdi:clipboard-pulse",
     "casesPer100k": "mdi:home-group",
-    "casesPerPopulation": "mdi:earth",
+    "newCases": "mdi:shield-bug",
+    "newDeaths": "mdi:shield-cross",
+    "newRecovered": "mdi:shield-sync",
 }
+
+
+async def async_setup_platform(
+    hass: HomeAssistantType,
+    config: ConfigType,
+    async_add_entities: Callable,
+    discovery_info: Optional[DiscoveryInfoType] = None,
+) -> None:
+    """Set up the sensor platform."""
+    session = async_get_clientsession(hass)
+
+    api = RKICovidAPI(session)
+    coordinator = await get_coordinator(hass, api)
+
+    districts = config[CONF_DISTRICTS]
+
+    sensors = [
+        RKICovidNumbersSensor(coordinator, district["name"], info_type)
+        for info_type in SENSORS
+        for district in districts
+    ]
+    async_add_entities(sensors, update_before_add=True)
 
 
 async def async_setup_entry(
@@ -77,6 +107,7 @@ class RKICovidNumbersSensor(CoordinatorEntity):
         self.unique_id = f"{district}-{info_type}"
         self.district = district
         self.info_type = info_type
+        self.updated = data.lastUpdate
 
     @property
     def available(self) -> bool:
@@ -99,14 +130,20 @@ class RKICovidNumbersSensor(CoordinatorEntity):
     @property
     def unit_of_measurement(self):
         """Return unit of measurement."""
-        if self.info_type == "count" or self.info_type == "deaths":
+        if (
+            self.info_type == "count"
+            or self.info_type == "deaths"
+            or self.info_type == "recovered"
+        ):
             return "people"
         elif self.info_type == "weekIncidence":
-            return ""
+            return "#"
         else:
             return "cases"
 
     @property
     def device_state_attributes(self):
         """Return device attributes."""
-        return {ATTR_ATTRIBUTION: ATTRIBUTION}
+        return {
+            ATTR_ATTRIBUTION: f"last updated {self.updated.strftime('%d %b, %Y  %H:%M:%S')} \n{ATTRIBUTION}"
+        }
