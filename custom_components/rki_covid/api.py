@@ -72,23 +72,36 @@ class RKICovidAPI:
                 # Count data per state
                 if state not in collectedData:
                     collectedData[state] = DataCollector()
-                collectedData[state].population = collectedData[state].population + population
+                collectedData[state].population = (
+                    collectedData[state].population + population
+                )
                 collectedData[state].count = collectedData[state].count + cases
                 collectedData[state].deaths = collectedData[state].deaths + deaths
-                collectedData[state].casesPerWeek = collectedData[state].casesPerWeek + casesPerWeek
-                collectedData[state].recovered = collectedData[state].recovered + recovered
+                collectedData[state].casesPerWeek = (
+                    collectedData[state].casesPerWeek + casesPerWeek
+                )
+                collectedData[state].recovered = (
+                    collectedData[state].recovered + recovered
+                )
                 # weekIncidence is calculated
                 # casesPer100k is calculated
-                collectedData[state].newCases = collectedData[state].newCases + new_cases
-                collectedData[state].newDeaths = collectedData[state].newDeaths + new_deaths
-                collectedData[state].newRecovered = collectedData[state].newRecovered + new_recovered
+                collectedData[state].newCases = (
+                    collectedData[state].newCases + new_cases
+                )
+                collectedData[state].newDeaths = (
+                    collectedData[state].newDeaths + new_deaths
+                )
+                collectedData[state].newRecovered = (
+                    collectedData[state].newRecovered + new_recovered
+                )
                 collectedData[state].dataCount = collectedData[state].dataCount + 1
-
 
             germanyTotal = DataCollector()
 
             for key, value in collectedData.items():
-                value.weekIncidence = round(value.casesPerWeek / value.population * 100000, 2)
+                value.weekIncidence = round(
+                    value.casesPerWeek / value.population * 100000, 2
+                )
                 value.casesPer100k = round(value.count / value.population * 100000, 2)
 
                 results.append(
@@ -106,7 +119,7 @@ class RKICovidAPI:
                         newCases=value.newCases,
                         newDeaths=value.newDeaths,
                         newRecovered=value.newRecovered,
-                        lastUpdate=lastUpdate
+                        lastUpdate=lastUpdate,
                     )
                 )
 
@@ -114,17 +127,25 @@ class RKICovidAPI:
                 germanyTotal.population = germanyTotal.population + value.population
                 germanyTotal.count = germanyTotal.count + value.count
                 germanyTotal.deaths = germanyTotal.deaths + value.deaths
-                germanyTotal.casesPerWeek = germanyTotal.casesPerWeek + value.casesPerWeek
+                germanyTotal.casesPerWeek = (
+                    germanyTotal.casesPerWeek + value.casesPerWeek
+                )
                 germanyTotal.recovered = germanyTotal.recovered + value.recovered
                 # weekIncidence is calculated
                 # casesPer100k is calculated
                 germanyTotal.newCases = germanyTotal.newCases + value.newCases
-                germanyTotal.newRecovered = germanyTotal.newRecovered + value.newRecovered
+                germanyTotal.newRecovered = (
+                    germanyTotal.newRecovered + value.newRecovered
+                )
                 germanyTotal.newDeaths = germanyTotal.newDeaths + value.newDeaths
                 germanyTotal.dataCount = germanyTotal.dataCount + 1
 
-            germanyTotal.casesPer100k = round(germanyTotal.count / germanyTotal.population * 100000, 2)
-            germanyTotal.weekIncidence = round(germanyTotal.casesPerWeek / germanyTotal.population * 100000, 2)
+            germanyTotal.casesPer100k = round(
+                germanyTotal.count / germanyTotal.population * 100000, 2
+            )
+            germanyTotal.weekIncidence = round(
+                germanyTotal.casesPerWeek / germanyTotal.population * 100000, 2
+            )
 
             results.append(
                 DistrictData(
@@ -141,7 +162,7 @@ class RKICovidAPI:
                     newCases=germanyTotal.newCases,
                     newDeaths=germanyTotal.newDeaths,
                     newRecovered=germanyTotal.newRecovered,
-                    lastUpdate=lastUpdate
+                    lastUpdate=lastUpdate,
                 )
             )
             return results

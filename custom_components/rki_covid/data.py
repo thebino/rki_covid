@@ -22,8 +22,8 @@ class DistrictData:
     newRecovered: int
     lastUpdate: datetime
 
-class DataCollector:
 
+class DataCollector:
     def __init__(self):
         self.population = 0
         self.count = 0
