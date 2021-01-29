@@ -7,8 +7,8 @@
           "county": "District",
           "name": "Name of the sensor"
         },
-        "title": "District",
-        "description": "Pick a district to monitor"
+        "title": "District or state",
+        "description": "Pick a district or state to monitor"
       }
     }
   }
