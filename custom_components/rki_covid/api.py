@@ -7,7 +7,7 @@ from typing import Iterable
 from aiohttp import ClientError, ClientSession
 
 from custom_components.rki_covid.const import BASE_API_URL, ENDPOINT_DISTRICTS
-from custom_components.rki_covid.data import DistrictData, DataCollector
+from custom_components.rki_covid.data import DataCollector, DistrictData
 
 _LOGGER = logging.getLogger(__name__)
 
