@@ -34,7 +34,8 @@ The `rki_covid` component is a Home Assistant custom sensor for monitoring regio
 
 ## Configuration
 Add a new integration via `Configuration > Integration` and select your district to monitor.
-You can add multiple integrations for different districts.
+
+**Hint:** You can add multiple integrations for different districts.
 
 Each district will add `5 Entities` wich can be added to the Lovelace UI.
 
@@ -53,6 +54,17 @@ This integration creates entities in the format `DOMAIN.NAME_entity`.
 |`sensor.NAME_casesPer100k`| number | indicates cases per 100k.
 |`sensor.NAME_weekIncidence`| number | indicates the week incidence per 100.000 inhabitants.
 
+## Configuration.yaml
+
+```yaml
+sensor:
+  - platform: rki_covid
+    districts:
+     - name: 'SK Augsburg'
+     - name: 'SK Berlin Mitte'
+     - name: 'BL Bayern'
+     - name: 'LK München'
+```
 
 ## Graph
 Home-Assistant has built-in cards for graphs wich could be really helpful to display the current count with history.
