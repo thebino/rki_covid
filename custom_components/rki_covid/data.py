@@ -24,7 +24,10 @@ class DistrictData:
 
 
 class DataCollector:
+    """Helper class to sum up district data."""
+
     def __init__(self):
+        """Initialize with sane values."""
         self.population = 0
         self.count = 0
         self.deaths = 0
