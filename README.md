@@ -12,6 +12,8 @@ The `rki_covid` component is a Home Assistant custom sensor for monitoring regio
   * [Install with HACS](#install-with-hacs)
   * [Install manually](#install-manually)
 * [Configuration](#configuration)
+  * [Configuration via User interface](#user-interface)
+  * [Configuration via configuration.yaml](#configurationyaml)
 * [Entities](#entities)
 * [Graph](#graph)
 * [Automations](#automations)
@@ -33,15 +35,39 @@ The `rki_covid` component is a Home Assistant custom sensor for monitoring regio
 
 
 ## Configuration
-Add a new integration via `Configuration > Integration` and select your district to monitor.
 
-**Hint:** You can add multiple integrations for different districts.
+#### User interface
+Open the `Configuration` of your Home-Assistant instance and select `Integrations`.
+Add a new integration, search and select `rki covid`.
+A dialog appears to select a district or state to monitor.
+After submitting the dialog, the newly added sensor entity is available.
 
-Each district will add `5 Entities` wich can be added to the Lovelace UI.
+**Hint:** Repeat the process to add multiple districts or states.
+
+![Configuration via User interface](docs/configuration.gif)
+
+#### Configuration.yaml
+It is also possible to add districts / states via the `configuration.yaml`.
+Open your configuration file in an editor.
+Add a new sensor platform called `rki_covid` and add a list of districts by name.
+
+```yaml
+sensor:
+  - platform: rki_covid
+    districts:
+     - name: 'SK Augsburg'
+     - name: 'SK Berlin Mitte'
+     - name: 'BL Bayern'
+     - name: 'LK München'
+```
+
+**Hint:** You have to validate the configuration (`Configuration > Server Controls > Check configuration`) and restart Home Assistant before the new sensors become available.
+
 
 
 ## Entities
-This integration creates entities in the format `DOMAIN.NAME_entity`.
+
+Each integration creates multiple entities in the format `sensor.NAME_entity`.
 
 |Sensor  |Type|Description
 |:-----------|:---|:------------
@@ -54,17 +80,6 @@ This integration creates entities in the format `DOMAIN.NAME_entity`.
 |`sensor.NAME_casesPer100k`| number | indicates cases per 100k.
 |`sensor.NAME_weekIncidence`| number | indicates the week incidence per 100.000 inhabitants.
 
-## Configuration.yaml
-
-```yaml
-sensor:
-  - platform: rki_covid
-    districts:
-     - name: 'SK Augsburg'
-     - name: 'SK Berlin Mitte'
-     - name: 'BL Bayern'
-     - name: 'LK München'
-```
 
 ## Graph
 Home-Assistant has built-in cards for graphs wich could be really helpful to display the current count with history.
