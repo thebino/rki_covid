@@ -15,14 +15,15 @@ _LOGGER = logging.getLogger(__name__)
 class RKICovidAPI:
     """REST API for RKI Covid numbers."""
 
-    def __init__(self, session: ClientSession):
+    def __init__(self, session: ClientSession, baseurl: str = BASE_API_URL):
         """Initialize the REST API."""
         self.session = session
+        self.baseurl = baseurl
 
     async def load_districts(self) -> Iterable:
         """Return a specific district."""
         response = await self.session.get(
-            url=f"{BASE_API_URL}{ENDPOINT_DISTRICTS}", allow_redirects=True
+            url=f"{self.baseurl}{ENDPOINT_DISTRICTS}", allow_redirects=True
         )
         if response.status == 200:
             data = await response.json()
