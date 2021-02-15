@@ -54,12 +54,15 @@ Add a new sensor platform called `rki_covid` and add a list of districts by name
 ```yaml
 sensor:
   - platform: rki_covid
+    baseurl: 'https://api.corona-zahlen.org'
     districts:
      - name: 'SK Augsburg'
      - name: 'SK Berlin Mitte'
      - name: 'BL Bayern'
      - name: 'LK München'
 ```
+
+`baseurl` is optional to support local instances of [rki-covid-api](https://github.com/marlon360/rki-covid-api)
 
 **Hint:** You have to validate the configuration (`Configuration > Server Controls > Check configuration`) and restart Home Assistant before the new sensors become available.
 
