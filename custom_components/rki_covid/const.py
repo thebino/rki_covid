@@ -9,6 +9,7 @@ ENDPOINT_DISTRICTS = "/districts"
 # configuration keywords
 CONF_DISTRICTS = "districts"
 CONF_COUNTY = "county"
+CONF_BASEURL = "baseurl"
 
 # configuration attributes
 ATTR_COUNTY = "county"
