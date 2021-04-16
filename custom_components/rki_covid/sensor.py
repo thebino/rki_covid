@@ -20,7 +20,7 @@ import voluptuous as vol
 
 from . import get_coordinator
 from .api import RKICovidAPI
-from .const import ATTRIBUTION, CONF_BASEURL, CONF_COUNTY, CONF_DISTRICTS
+from .const import ATTRIBUTION, CONF_COUNTY, CONF_DISTRICTS
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -33,7 +33,6 @@ DISTRICT_SCHEMA = vol.Schema({vol.Required(CONF_NAME): cv.string})
 # schema for each platform sensor
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
-        vol.Optional(CONF_BASEURL): str,
         vol.Required(CONF_DISTRICTS): vol.All(cv.ensure_list, [DISTRICT_SCHEMA]),
     }
 )
@@ -59,12 +58,7 @@ async def async_setup_platform(
     """Set up the sensor platform."""
     session = async_get_clientsession(hass)
 
-    if CONF_BASEURL in config:
-        baseurl = config[CONF_BASEURL]
-        _LOGGER.warning(f"You are using a custom base url: {baseurl}")
-        api = RKICovidAPI(session, baseurl)
-    else:
-        api = RKICovidAPI(session)
+    api = RKICovidAPI(session)
     coordinator = await get_coordinator(hass, api)
 
     districts = config[CONF_DISTRICTS]
