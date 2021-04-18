@@ -3,12 +3,9 @@ DOMAIN = "rki_covid"
 
 ATTRIBUTION = "Data provided by Robert Koch-Institut"
 
-BASE_API_URL = "https://api.corona-zahlen.org"
-ENDPOINT_DISTRICTS = "/districts"
-
-# configuration keywords
+# configuration.yaml keywords
 CONF_DISTRICTS = "districts"
-CONF_COUNTY = "county"
+CONF_DISTRICT_NAME = "name"
 CONF_BASEURL = "baseurl"
 
 # configuration attributes
