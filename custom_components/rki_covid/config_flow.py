@@ -7,8 +7,9 @@ from homeassistant import config_entries
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 import voluptuous as vol
 
-from . import RKICovidAPI, get_coordinator
+from . import get_coordinator
 from .const import DOMAIN
+from rki_covid_parser.parser import RkiCovidParser
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -23,17 +24,19 @@ class RKICovidNumbersConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     async def async_step_user(self, user_input: Optional[Dict[str, Any]] = None):
         """Invoke when a user initiates a flow via the user interface."""
-        api = RKICovidAPI(async_get_clientsession(self.hass))
+        _LOGGER.info("config_flow#async_step_user()")
+        _LOGGER.debug(f"User triggered configuration flow via UI: {user_input}")
+
+        parser = RkiCovidParser(async_get_clientsession(self.hass))
 
         errors: Dict[str, str] = {}
 
         if self._options is None:
             # add default county as first item
-            # self._options = {CONF_COUNTY: "LK Munich"}
             self._options = {}
 
             # add items from coordinator
-            coordinator = await get_coordinator(self.hass, api)
+            coordinator = await get_coordinator(self.hass, parser)
             for case in sorted(coordinator.data.values(), key=lambda case: case.county):
                 self._options[case.county] = case.county
 
@@ -42,6 +45,7 @@ class RKICovidNumbersConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             self._abort_if_unique_id_configured()
 
             # User is done adding sensors, create the config entry.
+            _LOGGER.debug(f"create entry from Configuration UI")
             return self.async_create_entry(
                 title=self._options[user_input["county"]], data=user_input
             )

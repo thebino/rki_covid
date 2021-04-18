@@ -1,6 +1,6 @@
 """RKI Covid numbers sensor."""
 
-from datetime import timedelta
+from datetime import timedelta, datetime
 import logging
 from typing import Callable, Dict, Optional
 
@@ -17,10 +17,17 @@ from homeassistant.helpers.typing import (
 )
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 import voluptuous as vol
+from rki_covid_parser.parser import RkiCovidParser
 
 from . import get_coordinator
-from .api import RKICovidAPI
-from .const import ATTRIBUTION, CONF_BASEURL, CONF_COUNTY, CONF_DISTRICTS
+
+from .const import (
+    ATTRIBUTION,
+    ATTR_COUNTY,
+    CONF_BASEURL,
+    CONF_DISTRICTS,
+    CONF_DISTRICT_NAME,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -57,20 +64,19 @@ async def async_setup_platform(
     discovery_info: Optional[DiscoveryInfoType] = None,
 ) -> None:
     """Set up the sensor platform."""
+    _LOGGER.debug(f"setup sensor for platform")
     session = async_get_clientsession(hass)
 
     if CONF_BASEURL in config:
-        baseurl = config[CONF_BASEURL]
-        _LOGGER.warning(f"You are using a custom base url: {baseurl}")
-        api = RKICovidAPI(session, baseurl)
-    else:
-        api = RKICovidAPI(session)
-    coordinator = await get_coordinator(hass, api)
+        _LOGGER.warning(f"Baseurl is not supported anymore.")
+
+    parser = RkiCovidParser(async_get_clientsession(hass))
+    coordinator = await get_coordinator(hass, parser)
 
     districts = config[CONF_DISTRICTS]
 
     sensors = [
-        RKICovidNumbersSensor(coordinator, district["name"], info_type)
+        RKICovidNumbersSensor(coordinator, district[CONF_DISTRICT_NAME], info_type)
         for info_type in SENSORS
         for district in districts
     ]
@@ -83,11 +89,12 @@ async def async_setup_entry(
     async_add_entities,
 ):
     """Create sensors from a config entry in the integrations UI."""
+    _LOGGER.debug(f"create sensor from config entry {config_entry.data}")
     session = async_get_clientsession(hass)
-    api = RKICovidAPI(session)
-    coordinator = await get_coordinator(hass, api)
+    parser = RkiCovidParser(async_get_clientsession(hass))
+    coordinator = await get_coordinator(hass, parser)
 
-    district = config_entry.data[CONF_COUNTY]
+    district = config_entry.data[ATTR_COUNTY]
     sensors = [
         RKICovidNumbersSensor(coordinator, district, info_type) for info_type in SENSORS
     ]
@@ -107,15 +114,19 @@ class RKICovidNumbersSensor(CoordinatorEntity):
         info_type: str,
     ):
         """Initialize a new sensor."""
+        _LOGGER.debug(f"initialize {info_type} sensor for {district}")
         super().__init__(coordinator)
 
         data = coordinator.data[district]
 
-        self.name = f"{data.county} {info_type}"
+        if data.county:
+            self.name = f"{data.county} {info_type}"
+        else:
+            self.name = f"{data.name} {info_type}"
         self.unique_id = f"{district}-{info_type}"
         self.district = district
         self.info_type = info_type
-        self.updated = data.lastUpdate
+        self.updated = datetime.now()
 
     @property
     def available(self) -> bool:
