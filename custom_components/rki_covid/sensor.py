@@ -1,6 +1,6 @@
 """RKI Covid numbers sensor."""
 
-from datetime import timedelta, datetime
+from datetime import datetime, timedelta
 import logging
 from typing import Callable, Dict, Optional
 
@@ -16,17 +16,16 @@ from homeassistant.helpers.typing import (
     HomeAssistantType,
 )
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
-import voluptuous as vol
 from rki_covid_parser.parser import RkiCovidParser
+import voluptuous as vol
 
 from . import get_coordinator
-
 from .const import (
-    ATTRIBUTION,
     ATTR_COUNTY,
+    ATTRIBUTION,
     CONF_BASEURL,
-    CONF_DISTRICTS,
     CONF_DISTRICT_NAME,
+    CONF_DISTRICTS,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -64,13 +63,13 @@ async def async_setup_platform(
     discovery_info: Optional[DiscoveryInfoType] = None,
 ) -> None:
     """Set up the sensor platform."""
-    _LOGGER.debug(f"setup sensor for platform")
+    _LOGGER.debug("setup sensor for platform")
     session = async_get_clientsession(hass)
 
     if CONF_BASEURL in config:
-        _LOGGER.warning(f"Baseurl is not supported anymore.")
+        _LOGGER.warning("Baseurl is not supported anymore.")
 
-    parser = RkiCovidParser(async_get_clientsession(hass))
+    parser = RkiCovidParser(session)
     coordinator = await get_coordinator(hass, parser)
 
     districts = config[CONF_DISTRICTS]
@@ -91,7 +90,7 @@ async def async_setup_entry(
     """Create sensors from a config entry in the integrations UI."""
     _LOGGER.debug(f"create sensor from config entry {config_entry.data}")
     session = async_get_clientsession(hass)
-    parser = RkiCovidParser(async_get_clientsession(hass))
+    parser = RkiCovidParser(session)
     coordinator = await get_coordinator(hass, parser)
 
     district = config_entry.data[ATTR_COUNTY]

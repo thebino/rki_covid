@@ -5,11 +5,11 @@ from typing import Any, Dict, Optional
 
 from homeassistant import config_entries
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from rki_covid_parser.parser import RkiCovidParser
 import voluptuous as vol
 
 from . import get_coordinator
 from .const import DOMAIN
-from rki_covid_parser.parser import RkiCovidParser
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -45,7 +45,7 @@ class RKICovidNumbersConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             self._abort_if_unique_id_configured()
 
             # User is done adding sensors, create the config entry.
-            _LOGGER.debug(f"create entry from Configuration UI")
+            _LOGGER.debug("create entry from Configuration UI")
             return self.async_create_entry(
                 title=self._options[user_input["county"]], data=user_input
             )

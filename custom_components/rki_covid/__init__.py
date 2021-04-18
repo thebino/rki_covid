@@ -8,10 +8,10 @@ import async_timeout
 from homeassistant import config_entries, core
 from homeassistant.helpers import update_coordinator
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from rki_covid_parser.parser import RkiCovidParser
 
 from custom_components.rki_covid.const import DOMAIN
 from custom_components.rki_covid.data import DistrictData
-from rki_covid_parser.parser import RkiCovidParser
 
 _LOGGER = logging.getLogger(__name__)
 PLATFORMS = ["sensor"]
