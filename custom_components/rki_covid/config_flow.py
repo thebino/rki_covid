@@ -9,7 +9,7 @@ from rki_covid_parser.parser import RkiCovidParser
 import voluptuous as vol
 
 from . import get_coordinator
-from .const import DOMAIN
+from .const import ATTR_COUNTY, DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -22,37 +22,40 @@ class RKICovidNumbersConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     _options = None
 
-    async def async_step_user(self, user_input: Optional[Dict[str, Any]] = None):
+    async def async_step_user(self, user_input: Optional[Dict[str,Any]] = None): # type: ignore
         """Invoke when a user initiates a flow via the user interface."""
-        _LOGGER.info("config_flow#async_step_user()")
-        _LOGGER.debug(f"User triggered configuration flow via UI: {user_input}")
+        _LOGGER.debug(
+            f"User triggered configuration flow via UI. user_input: {user_input}"
+        )
 
         parser = RkiCovidParser(async_get_clientsession(self.hass))
 
-        errors: Dict[str, str] = {}
+        errors: Dict[str,str] = {}
 
         if self._options is None:
-            # add default county as first item
             self._options = {}
 
             # add items from coordinator
             coordinator = await get_coordinator(self.hass, parser)
-            for case in sorted(coordinator.data.values(), key=lambda case: case.county):
-                self._options[case.county] = case.county
+            for case in sorted(coordinator.data.values(), key=lambda case: case.name):
+                if case.county:
+                    self._options[case.county] = case.county
+                else:
+                    self._options[case.name] = case.name
 
         if user_input is not None:
-            await self.async_set_unique_id(user_input["county"])
+            await self.async_set_unique_id(user_input[ATTR_COUNTY])
             self._abort_if_unique_id_configured()
 
             # User is done adding sensors, create the config entry.
-            _LOGGER.debug("create entry from Configuration UI")
+            _LOGGER.debug("Create entry from Configuration UI")
             return self.async_create_entry(
-                title=self._options[user_input["county"]], data=user_input
+                title=self._options[user_input[ATTR_COUNTY]], data=user_input
             )
 
         # Show user input for adding sensors.
         return self.async_show_form(
             step_id="user",
-            data_schema=vol.Schema({vol.Required("county"): vol.In(self._options)}),
+            data_schema=vol.Schema({vol.Required(ATTR_COUNTY): vol.In(self._options)}),
             errors=errors,
         )

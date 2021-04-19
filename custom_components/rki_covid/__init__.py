@@ -10,7 +10,7 @@ from homeassistant.helpers import update_coordinator
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from rki_covid_parser.parser import RkiCovidParser
 
-from custom_components.rki_covid.const import DOMAIN
+from custom_components.rki_covid.const import ATTR_COUNTY, DOMAIN
 from custom_components.rki_covid.data import DistrictData
 
 _LOGGER = logging.getLogger(__name__)
@@ -33,7 +33,7 @@ async def async_setup_entry(
     hass: core.HomeAssistant, entry: config_entries.ConfigEntry
 ) -> bool:
     """Set up component from a config entry."""
-    _LOGGER.debug("setup component from config entry.")
+    _LOGGER.debug(f"Setup item from config entry: {entry.data}.")
     # Forward the setup to the sensor platform.
     for component in PLATFORMS:
         hass.async_create_task(
@@ -47,7 +47,7 @@ async def async_unload_entry(
     hass: core.HomeAssistant, entry: config_entries.ConfigEntry
 ):
     """Unload a config entry."""
-    _LOGGER.debug("init#async_unload_entry()")
+    _LOGGER.debug(f"Unload item from config entry: {entry.data}.")
     unload_ok = all(
         await asyncio.gather(
             *[
@@ -106,7 +106,7 @@ async def get_coordinator(hass: core.HomeAssistant, parser: RkiCovidParser):
                     name = "BL " + state.name
                     items[name] = DistrictData(
                         name,
-                        None,
+                        name,
                         None,
                         state.population,
                         state.cases,
@@ -124,7 +124,7 @@ async def get_coordinator(hass: core.HomeAssistant, parser: RkiCovidParser):
                 # country
                 items["Deutschland"] = DistrictData(
                     "Deutschland",
-                    None,
+                    "Deutschland",
                     None,
                     parser.country.population,
                     parser.country.cases,
