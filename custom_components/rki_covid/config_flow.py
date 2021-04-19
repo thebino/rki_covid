@@ -22,7 +22,7 @@ class RKICovidNumbersConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     _options = None
 
-    async def async_step_user(self, user_input: Optional[Dict[str,Any]] = None): # type: ignore
+    async def async_step_user(self, user_input: Optional[Dict[str, Any]] = None):  # type: ignore
         """Invoke when a user initiates a flow via the user interface."""
         _LOGGER.debug(
             f"User triggered configuration flow via UI. user_input: {user_input}"
@@ -30,7 +30,7 @@ class RKICovidNumbersConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         parser = RkiCovidParser(async_get_clientsession(self.hass))
 
-        errors: Dict[str,str] = {}
+        errors: Dict[str, str] = {}
 
         if self._options is None:
             self._options = {}
