@@ -93,7 +93,11 @@ async def async_setup_entry(
     parser = RkiCovidParser(session)
     coordinator = await get_coordinator(hass, parser)
 
-    district = config_entry.data[ATTR_COUNTY]
+    try:
+        district = config_entry.data[ATTR_COUNTY]
+    except KeyError:
+        # handle deprecated entries
+        district = config_entry.data["county"]
     sensors = [
         RKICovidNumbersSensor(coordinator, district, info_type) for info_type in SENSORS
     ]
