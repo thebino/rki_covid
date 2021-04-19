@@ -10,7 +10,7 @@ class DistrictData:
 
     name: str
     county: Optional[str]
-    state: Optional[str]
+    state: str
     population: str
     count: int
     deaths: int
