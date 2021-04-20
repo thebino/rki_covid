@@ -7,6 +7,7 @@ from typing import Callable, Dict, Optional
 from homeassistant import config_entries, core
 from homeassistant.components.sensor import PLATFORM_SCHEMA
 from homeassistant.const import ATTR_ATTRIBUTION, CONF_NAME
+from homeassistant.exceptions import PlatformNotReady
 from homeassistant.helpers import update_coordinator
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 import homeassistant.helpers.config_validation as cv
@@ -72,6 +73,9 @@ async def async_setup_platform(
     parser = RkiCovidParser(session)
     coordinator = await get_coordinator(hass, parser)
 
+    if coordinator is None or coordinator.data is None:
+        raise PlatformNotReady(f"Data coordinator could not be initialized!")
+
     districts = config[CONF_DISTRICTS]
 
     sensors = [
@@ -92,6 +96,9 @@ async def async_setup_entry(
     session = async_get_clientsession(hass)
     parser = RkiCovidParser(session)
     coordinator = await get_coordinator(hass, parser)
+
+    if coordinator is None or coordinator.data is None:
+        raise PlatformNotReady(f"Data coordinator could not be initialized!")
 
     try:
         district = config_entry.data[ATTR_COUNTY]

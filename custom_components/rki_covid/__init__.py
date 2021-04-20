@@ -73,9 +73,10 @@ async def get_coordinator(hass: core.HomeAssistant, parser: RkiCovidParser):
         """
         _LOGGER.debug("fetch data from rki-covid-parser.")
         try:
-            with async_timeout.timeout(10):
+            with async_timeout.timeout(30):
                 # return {case.county: case for case in await api.load_districts()}
                 await parser.load_data()
+                _LOGGER.debug("fetching finished.")
 
                 items = {}
 
@@ -139,11 +140,16 @@ async def get_coordinator(hass: core.HomeAssistant, parser: RkiCovidParser):
                     parser.country.lastUpdate,
                 )
 
+                _LOGGER.debug("parsing data finished.")
                 return items
 
-        except (asyncio.TimeoutError, aiohttp.ClientError) as err:
+        except asyncio.TimeoutError as err:
             raise update_coordinator.UpdateFailed(
-                f"Error reading data from rki-covid-parser: {err}"
+                f"Error reading data from rki-covid-parser timed-out: {err}"
+            )
+        except aiohttp.ClientError as err:
+            raise update_coordinator.UpdateFailed(
+                f"Error reading data from rki-covid-parser by client: {err}"
             )
 
     hass.data[DOMAIN] = update_coordinator.DataUpdateCoordinator(
