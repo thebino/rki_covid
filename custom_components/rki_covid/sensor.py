@@ -74,7 +74,7 @@ async def async_setup_platform(
     coordinator = await get_coordinator(hass, parser)
 
     if coordinator is None or coordinator.data is None:
-        raise PlatformNotReady(f"Data coordinator could not be initialized!")
+        raise PlatformNotReady("Data coordinator could not be initialized!")
 
     districts = config[CONF_DISTRICTS]
 
@@ -98,7 +98,7 @@ async def async_setup_entry(
     coordinator = await get_coordinator(hass, parser)
 
     if coordinator is None or coordinator.data is None:
-        raise PlatformNotReady(f"Data coordinator could not be initialized!")
+        raise PlatformNotReady("Data coordinator could not be initialized!")
 
     try:
         district = config_entry.data[ATTR_COUNTY]
