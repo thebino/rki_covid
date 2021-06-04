@@ -78,8 +78,8 @@ Each integration creates multiple entities in the format `sensor.NAME_entity`.
 |`sensor.NAME_newCases`| number | indicates the new confirmed cases.
 |`sensor.NAME_deaths`| number | indicates the numbers of confirmed death cases.
 |`sensor.NAME_newDeaths`| number | indicates the numbers of new confirmed death cases.
-|`sensor.NAME_recovered`| number | indicates the numbers of confirmed death cases.
-|`sensor.NAME_newRecovered`| number | indicates the numbers of new confirmed death cases.
+|`sensor.NAME_recovered`| number | indicates the numbers of confirmed recovery cases.
+|`sensor.NAME_newRecovered`| number | indicates the numbers of new confirmed recovery cases.
 |`sensor.NAME_casesPer100k`| number | indicates cases per 100k.
 |`sensor.NAME_weekIncidence`| number | indicates the week incidence per 100.000 inhabitants.
 
