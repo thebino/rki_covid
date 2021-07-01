@@ -8,7 +8,7 @@
   "dependencies": [],
   "codeowners": ["@thebino"],
   "requirements": [
-      "rki-covid-parser==1.0.0"
+      "rki-covid-parser~=1.0.0"
   ],
   "quality_scale": "gold",
   "config_flow": true
