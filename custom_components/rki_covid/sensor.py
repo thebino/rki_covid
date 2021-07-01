@@ -166,7 +166,7 @@ class RKICovidNumbersSensor(CoordinatorEntity):
         ):
             return "people"
         elif self.info_type == "weekIncidence":
-            return "#"
+            return "nb"
         else:
             return "cases"
 
