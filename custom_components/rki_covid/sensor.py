@@ -5,7 +5,7 @@ import logging
 from typing import Callable, Dict, Optional
 
 from homeassistant import config_entries, core
-from homeassistant.components.sensor import PLATFORM_SCHEMA
+from homeassistant.components.sensor import PLATFORM_SCHEMA, STATE_CLASS_MEASUREMENT
 from homeassistant.const import ATTR_ATTRIBUTION, CONF_NAME
 from homeassistant.exceptions import PlatformNotReady
 from homeassistant.helpers import update_coordinator
@@ -155,6 +155,11 @@ class RKICovidNumbersSensor(CoordinatorEntity):
     def icon(self):
         """Return the icon."""
         return SENSORS[self.info_type]
+
+    @property
+    def state_class(self):
+        """Opt-in for long-term statistics."""
+        return STATE_CLASS_MEASUREMENT
 
     @property
     def unit_of_measurement(self):
