@@ -1,0 +1,47 @@
+name: Download source data
+
+on:
+  issue_comment:
+
+jobs:
+  issue_commented:
+    # This job only runs for issue comments
+    name: Issue comment
+    if: ${{ !github.event.issue.pull_request }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download vaccinations_by_state
+      run: |
+        curl -i -vvv -X GET -g https://impfdashboard.de/static/data/germany_vaccinations_by_state.tsv > germany_vaccinations_by_state.tsv
+
+    - name: Download districts
+      run: |
+        curl -i -vvv -X GET -g https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query\?where\=1%3D1\&outFields\=RS,GEN,EWZ,cases,deaths,county,last_update,cases7_lk,death7_lk,BL\&returnGeometry\=false\&outSR\=4326\&f\=json > districts.json
+
+    - name: Download recovered
+      run: |
+        curl -i -vvv -X GET -g 'https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_COVID19/FeatureServer/0/query\?where\=NeuGenesen IN(1,0)&objectIds=&time=&resultType=standard&outFields=AnzahlGenesen,MeldeDatum,IdLandkreis&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnDistinctValues=false&cacheHint=false&orderByFields=IdLandkreis&groupByFieldsForStatistics=IdLandkreis&outStatistics=[{"statisticType":"sum","onStatisticField":"AnzahlGenesen","outStatisticFieldName":"recovered"},{"statisticType":"sum","onStatisticField":"AnzahlFall","outStatisticFieldName":"newCases"},{"statisticType":"sum","onStatisticField":"AnzahlTodesfall","outStatisticFieldName":"newDeaths"},{"statisticType":"max","onStatisticField":"MeldeDatum","outStatisticFieldName":"date"}]&having&resultOffset&resultRecordCount&sqlFormat=none&f=json&token' > recovered.json
+
+    - name: Download new cases
+      run: |
+        curl -i -vvv -X GET -g 'https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_COVID19/FeatureServer/0/query\?where\=NeuerFall IN(1,-1)&objectIds=&time=&resultType=standard&outFields=AnzahlGenesen,MeldeDatum,IdLandkreis&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnDistinctValues=false&cacheHint=false&orderByFields=IdLandkreis&groupByFieldsForStatistics=IdLandkreis&outStatistics=[{"statisticType":"sum","onStatisticField":"AnzahlGenesen","outStatisticFieldName":"recovered"},{"statisticType":"sum","onStatisticField":"AnzahlFall","outStatisticFieldName":"newCases"},{"statisticType":"sum","onStatisticField":"AnzahlTodesfall","outStatisticFieldName":"newDeaths"},{"statisticType":"max","onStatisticField":"MeldeDatum","outStatisticFieldName":"date"}]&having&resultOffset&resultRecordCount&sqlFormat=none&f=json&token' > new_cases.json
+
+    - name: Download new recovered
+      run: |
+        curl -i -vvv -X GET -g 'https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_COVID19/FeatureServer/0/query?where=NeuGenesen%20IN%281,-1%29&objectIds=&time=&resultType=standard&outFields=AnzahlGenesen,MeldeDatum,IdLandkreis&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnDistinctValues=false&cacheHint=false&orderByFields=IdLandkreis&groupByFieldsForStatistics=IdLandkreis&outStatistics=[{%22statisticType%22:%22sum%22,%22onStatisticField%22:%22AnzahlGenesen%22,%22outStatisticFieldName%22:%22recovered%22},{%22statisticType%22:%22sum%22,%22onStatisticField%22:%22AnzahlFall%22,%22outStatisticFieldName%22:%22newCases%22},{%22statisticType%22:%22sum%22,%22onStatisticField%22:%22AnzahlTodesfall%22,%22outStatisticFieldName%22:%22newDeaths%22},{%22statisticType%22:%22max%22,%22onStatisticField%22:%22MeldeDatum%22,%22outStatisticFieldName%22:%22date%22}]&having=&resultOffset=&resultRecordCount=&sqlFormat=none&f=json&token=' > new_recovered.json
+
+    - name: Download new deaths
+      run: |
+        curl -i -vvv -X GET -g 'https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_COVID19/FeatureServer/0/query?where=NeuerTodesfall%20IN%281,-1%29&objectIds=&time=&resultType=standard&outFields=AnzahlGenesen,MeldeDatum,IdLandkreis&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnDistinctValues=false&cacheHint=false&orderByFields=IdLandkreis&groupByFieldsForStatistics=IdLandkreis&outStatistics=[{%22statisticType%22:%22sum%22,%22onStatisticField%22:%22AnzahlGenesen%22,%22outStatisticFieldName%22:%22recovered%22},{%22statisticType%22:%22sum%22,%22onStatisticField%22:%22AnzahlFall%22,%22outStatisticFieldName%22:%22newCases%22},{%22statisticType%22:%22sum%22,%22onStatisticField%22:%22AnzahlTodesfall%22,%22outStatisticFieldName%22:%22newDeaths%22},{%22statisticType%22:%22max%22,%22onStatisticField%22:%22MeldeDatum%22,%22outStatisticFieldName%22:%22date%22}]&having=&resultOffset=&resultRecordCount=&sqlFormat=none&f=json&token=' > new_deaths.json
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: artifacts
+        path: |
+          districts.json
+          germany_vaccinations_by_state.tsv
+          new_cases.json
+          new_deaths.json
+          new_recovered.json
+          recovered.json
