@@ -1,12 +1,14 @@
 name: Download source data
 
 on:
+  issues:
+    types: [opened, reopened]
   issue_comment:
 
 jobs:
-  issue_commented:
-    # This job only runs for issue comments
-    name: Issue comment
+  download:
+    name: Download and archive data sources
+    # Skip if comment on pull request
     if: ${{ !github.event.issue.pull_request }}
     runs-on: ubuntu-latest
     steps:
