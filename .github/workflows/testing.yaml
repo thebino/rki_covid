@@ -22,7 +22,7 @@ jobs:
           python-version: 3.9
       
       - name: Install dependencies
-        run: pip install aiohttp tox pytest
+        run: pip install -r requirements_test.txt
       
       - name: pytest
         run: pytest
