@@ -1,11 +1,24 @@
+# Byte-compiled
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
 
-# intellij
-.idea/.gitignore
-.idea/vcs.xml
-.idea/misc.xml
-.idea/modules.xml
-.idea/rki_covid.iml
+# Distribution / packaging
+.Python
+.venv/
+build/
+develop-eggs/
+dist/
+eggs/
+.eggs/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
 
+# testing
+.tox
 .coverage
+coverage.xml
+htmlcov

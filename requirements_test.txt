@@ -1,0 +1,5 @@
+-r requirements_dev.txt
+asynctest ~= 0.13
+pytest ~= 6.2
+pytest-cov ~= 2.10
+pytest-homeassistant-custom-component >= 0.4.0

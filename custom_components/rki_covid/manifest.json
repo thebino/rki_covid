@@ -1,6 +1,6 @@
 {
   "domain": "rki_covid",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "iot_class": "cloud_polling",
   "name": "Robert-Koch Institut COVID Numbers",
   "documentation": "https://github.com/thebino/rki_covid/blob/master/README.md",

@@ -102,13 +102,13 @@ async def async_setup_entry(
 
     try:
         district = config_entry.data[ATTR_COUNTY]
+        sensors = [
+            RKICovidNumbersSensor(coordinator, district, info_type)
+            for info_type in SENSORS
+        ]
+        async_add_entities(sensors, update_before_add=True)
     except KeyError:
-        # handle deprecated entries
-        district = config_entry.data["county"]
-    sensors = [
-        RKICovidNumbersSensor(coordinator, district, info_type) for info_type in SENSORS
-    ]
-    async_add_entities(sensors, update_before_add=True)
+        _LOGGER.error("Could not determine %s from config!", ATTR_COUNTY)
 
 
 class RKICovidNumbersSensor(CoordinatorEntity):
@@ -160,6 +160,11 @@ class RKICovidNumbersSensor(CoordinatorEntity):
     def state_class(self):
         """Opt-in for long-term statistics."""
         return STATE_CLASS_MEASUREMENT
+
+    @property
+    def last_reset(self) -> datetime:
+        """Return the time when the sensor was last reset, if any."""
+        return None
 
     @property
     def unit_of_measurement(self):
