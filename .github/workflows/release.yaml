@@ -28,3 +28,4 @@ jobs:
           asset_name: rki_covid.zip
           tag: ${{ github.ref }}
           overwrite: true
+          prerelease: true
