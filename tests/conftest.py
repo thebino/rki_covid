@@ -1,8 +1,7 @@
 """global fixtures for tests."""
-import pytest
-
-
 from unittest.mock import patch
+
+import pytest
 
 pytest_plugins = "pytest_homeassistant_custom_component"
 

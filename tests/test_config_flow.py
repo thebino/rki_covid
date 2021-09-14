@@ -1,6 +1,5 @@
 """Test the RKI Covid numbers integration config flow."""
-from homeassistant import config_entries, setup
-from homeassistant import data_entry_flow
+from homeassistant import config_entries, data_entry_flow, setup
 
 from custom_components.rki_covid.const import DOMAIN
 

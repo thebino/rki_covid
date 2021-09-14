@@ -1,19 +1,20 @@
 """Test the RKI Covide numbers integration sensor."""
 
-from pytest_homeassistant_custom_component.common import MockConfigEntry
+import os
+from unittest.mock import AsyncMock, patch
+
 from homeassistant.setup import async_setup_component
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 from rki_covid_parser.const import (
     DISTRICTS_URL,
-    VACCINATIONS_URL,
-    DISTRICTS_URL_RECOVERED,
     DISTRICTS_URL_NEW_CASES,
+    DISTRICTS_URL_NEW_DEATHS,
     DISTRICTS_URL_NEW_RECOVERED,
-    DISTRICTS_URL_NEW_DEATHS
+    DISTRICTS_URL_RECOVERED,
+    VACCINATIONS_URL,
 )
-from custom_components.rki_covid.const import DOMAIN
 
-import os
-from unittest.mock import patch, AsyncMock
+from custom_components.rki_covid.const import DOMAIN
 
 
 def load_fixture(filename):
