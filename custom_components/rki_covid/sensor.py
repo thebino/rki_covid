@@ -161,6 +161,11 @@ class RKICovidNumbersSensor(CoordinatorEntity):
         return STATE_CLASS_MEASUREMENT
 
     @property
+    def last_reset(self) -> datetime:
+        """Return the time when the sensor was last reset, if any."""
+        return None
+
+    @property
     def unit_of_measurement(self):
         """Return unit of measurement."""
         if (
