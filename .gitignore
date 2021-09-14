@@ -20,4 +20,5 @@ wheels/
 # testing
 .tox
 .coverage
+coverage.xml
 htmlcov
