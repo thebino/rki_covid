@@ -47,7 +47,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 SENSORS = {
     "count": "mdi:virus",
-    "deaths": "mdi:christianity",
+    "deaths": "mdi:cross",
     "recovered": "mdi:bottle-tonic-plus-outline",
     "weekIncidence": "mdi:clipboard-pulse",
     "casesPer100k": "mdi:home-group",
