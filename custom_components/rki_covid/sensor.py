@@ -181,8 +181,8 @@ class RKICovidNumbersSensor(CoordinatorEntity):
             return "cases"
 
     @property
-    def device_state_attributes(self):
-        """Return device attributes."""
+    def extra_state_attributes(self):
+        """Return extra attributes."""
         return {
             ATTR_ATTRIBUTION: f"last updated {self.updated.strftime('%d %b, %Y  %H:%M:%S')} \n{ATTRIBUTION}"
         }

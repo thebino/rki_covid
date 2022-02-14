@@ -12,6 +12,8 @@ from rki_covid_parser.const import (
     DISTRICTS_URL_NEW_RECOVERED,
     DISTRICTS_URL_RECOVERED,
     VACCINATIONS_URL,
+    HOSPITALIZATION_URL,
+    VACCINATIONS_URL,
 )
 
 from custom_components.rki_covid.const import DOMAIN
@@ -46,6 +48,10 @@ async def test_sensor_with_mock_data(hass, aioclient_mock):
         DISTRICTS_URL_NEW_RECOVERED, text=load_fixture("new_recovered.json")
     )
     aioclient_mock.get(DISTRICTS_URL_NEW_DEATHS, text=load_fixture("new_deaths.json"))
+    aioclient_mock.get(HOSPITALIZATION_URL, text=load_fixture("hospitalisierungen.csv"))
+    aioclient_mock.get(
+        VACCINATIONS_URL, text=load_fixture("germany_vaccinations_by_state.tsv")
+    )
 
     entry = MockConfigEntry(domain=DOMAIN, data={"county": "SK Amberg"})
     entry.add_to_hass(hass)
