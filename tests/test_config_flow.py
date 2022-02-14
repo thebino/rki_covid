@@ -3,15 +3,6 @@ import os
 from unittest.mock import AsyncMock, patch
 
 from homeassistant import config_entries, data_entry_flow, setup
-from rki_covid_parser.const import (
-    DISTRICTS_URL,
-    DISTRICTS_URL_NEW_CASES,
-    DISTRICTS_URL_NEW_DEATHS,
-    DISTRICTS_URL_NEW_RECOVERED,
-    DISTRICTS_URL_RECOVERED,
-    HOSPITALIZATION_URL,
-    VACCINATIONS_URL,
-)
 from rki_covid_parser.parser import RkiCovidParser
 
 from custom_components.rki_covid.const import DOMAIN
