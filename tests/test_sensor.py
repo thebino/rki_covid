@@ -7,11 +7,10 @@ from homeassistant.setup import async_setup_component
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 from rki_covid_parser.const import (
     DISTRICTS_URL,
-    DISTRICTS_URL_NEW_CASES,
-    DISTRICTS_URL_NEW_DEATHS,
-    DISTRICTS_URL_NEW_RECOVERED,
     DISTRICTS_URL_RECOVERED,
-    VACCINATIONS_URL,
+    DISTRICTS_URL_NEW_CASES,
+    DISTRICTS_URL_NEW_RECOVERED,
+    DISTRICTS_URL_NEW_DEATHS,
     HOSPITALIZATION_URL,
     VACCINATIONS_URL,
 )
@@ -40,9 +39,6 @@ async def test_sensor_with_mock_data(hass, aioclient_mock):
     """Test sensor setup with mock data."""
     aioclient_mock.get(DISTRICTS_URL, text=load_fixture("districts.json"))
     aioclient_mock.get(DISTRICTS_URL_RECOVERED, text=load_fixture("recovered.json"))
-    aioclient_mock.get(
-        VACCINATIONS_URL, text=load_fixture("germany_vaccinations_by_state.tsv")
-    )
     aioclient_mock.get(DISTRICTS_URL_NEW_CASES, text=load_fixture("new_cases.json"))
     aioclient_mock.get(
         DISTRICTS_URL_NEW_RECOVERED, text=load_fixture("new_recovered.json")
