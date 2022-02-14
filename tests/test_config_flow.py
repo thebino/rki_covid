@@ -1,9 +1,8 @@
 """Test the RKI Covid numbers integration config flow."""
-from homeassistant import config_entries, data_entry_flow, setup
-
 import os
-from rki_covid_parser.parser import RkiCovidParser
-from custom_components.rki_covid.const import DOMAIN
+from unittest.mock import AsyncMock, patch
+
+from homeassistant import config_entries, data_entry_flow, setup
 from rki_covid_parser.const import (
     DISTRICTS_URL,
     DISTRICTS_URL_NEW_CASES,
@@ -13,7 +12,10 @@ from rki_covid_parser.const import (
     HOSPITALIZATION_URL,
     VACCINATIONS_URL,
 )
-from unittest.mock import AsyncMock, patch
+from rki_covid_parser.parser import RkiCovidParser
+
+from custom_components.rki_covid.const import DOMAIN
+
 from . import MOCK_COUNTRY, MOCK_DISTRICTS, MOCK_STATES
 
 
