@@ -1,0 +1,128 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run Home Assistant on port 8123",
+            "type": "shell",
+            "command": "container start",
+            "problemMatcher": []
+        },
+        {
+            "label": "Run Home Assistant configuration against /config",
+            "type": "shell",
+            "command": "container check",
+            "problemMatcher": []
+        },
+        {
+            "label": "Upgrade Home Assistant to latest dev",
+            "type": "shell",
+            "command": "container install",
+            "problemMatcher": []
+        },
+        {
+            "label": "Install a specific version of Home Assistant",
+            "type": "shell",
+            "command": "container set-version",
+            "problemMatcher": []
+        },
+        {
+            "label": "iSort",
+            "type": "shell",
+            "command": "isort --line-width 88 --trailing-comma -m 3 .",
+            "dependsOn": [
+                "Install all Test Requirements"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Black",
+            "type": "shell",
+            "command": "black .",
+            "dependsOn": [
+                "Install all Test Requirements"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Flake8",
+            "type": "shell",
+            "command": "flake8 --max-line-length 88 .",
+            "dependsOn": [
+                "Install all Test Requirements"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Pytest",
+            "type": "shell",
+            "command": "pytest --timeout=10 tests",
+            "dependsOn": [
+                "Install all Test Requirements"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Pylint",
+            "type": "shell",
+            "command": "pylint custom_components/rki_covid",
+            "dependsOn": [
+                "Install all Requirements"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Install all Test Requirements",
+            "type": "shell",
+            "command": "pip3 install -r requirements_test.txt",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        }
+    ]
+}

@@ -8,6 +8,10 @@
     "python.linting.pydocstyleEnabled": true,
     "python.linting.pydocstyleArgs": ["--max-line-length=120"],
     "python.linting.pylintEnabled": true,
+    "python.pythonPath": "/usr/local/bin/python",
+    "files.associations": {
+        "*.yaml": "home-assistant"
+    },
     "python.linting.pycodestyleEnabled": true,
     "python.linting.pycodestyleArgs": [
         "--max-line-length=120"

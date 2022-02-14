@@ -1,0 +1,16 @@
+---
+default_config:
+
+logger:
+  default: info
+  logs:
+    custom_components.rki_covid: debug
+
+sensor:
+  - platform: statistics
+    name: "Incidence Week incidence over last year"
+    entity_id: sensor.sk_munchen_weekincidence
+    state_characteristic: mean
+
+# (doc: https://www.home-assistant.io/integrations/debugpy/)
+debugpy:
