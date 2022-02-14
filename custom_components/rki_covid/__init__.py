@@ -73,7 +73,7 @@ async def get_coordinator(hass: core.HomeAssistant, parser: RkiCovidParser):
         """
         _LOGGER.debug("fetch data from rki-covid-parser.")
         try:
-            with async_timeout.timeout(30):
+            with async_timeout.timeout(60):
                 # return {case.county: case for case in await api.load_districts()}
                 await parser.load_data()
                 _LOGGER.debug("fetching finished.")
