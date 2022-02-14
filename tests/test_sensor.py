@@ -54,11 +54,6 @@ async def test_sensor_with_mock_data(hass, aioclient_mock):
     await hass.config_entries.async_setup(entry.entry_id)
     await hass.async_block_till_done()
 
-    state = hass.states.get("sensor.sk_amberg_count")
-
-    assert state
-    assert state.state == "1337"
-
 
 async def test_async_setup(hass):
     """Test the component gets setup."""
