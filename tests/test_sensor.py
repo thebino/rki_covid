@@ -7,10 +7,10 @@ from homeassistant.setup import async_setup_component
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 from rki_covid_parser.const import (
     DISTRICTS_URL,
-    DISTRICTS_URL_RECOVERED,
     DISTRICTS_URL_NEW_CASES,
-    DISTRICTS_URL_NEW_RECOVERED,
     DISTRICTS_URL_NEW_DEATHS,
+    DISTRICTS_URL_NEW_RECOVERED,
+    DISTRICTS_URL_RECOVERED,
     HOSPITALIZATION_URL,
     VACCINATIONS_URL,
 )
