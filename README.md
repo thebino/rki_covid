@@ -1,5 +1,16 @@
 # Robert-Koch Institut COVID Numbers
 
+
+> ⚠️⚠️⚠️
+> 
+> This repository has been archived.
+>
+> Due to the lack of interest in current covid numbers and missing contributions, this component is no longer maintained.
+> Feel free to get in contact if you wanna take over the maintenance.
+
+</br></br></br>
+
+
 [![GitHub contributors](https://img.shields.io/github/contributors/thebino/rki_covid)](https://github.com/thebino/rki_covid/graphs/contributors)
 ![Version](https://img.shields.io/github/v/release/thebino/rki_covid)
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
